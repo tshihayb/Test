@@ -178,6 +178,12 @@ NHANES_09_14$toothcount <- apply(NHANES_09_14[,674:701],1,sum, na.rm=T)
 #Making sure they were correctly coded
 View(NHANES_09_14 %>% select(seqn, permtooth_2:permtooth_31, toothcount) %>% slice(1:10))
 
+#Alternative and more efficient way of calculating toothcount
+NHANES_09_14$toothcount <- count_row_if(2, NHANES_09_14 %>% select(c(ohx02tc:ohx31tc),-c(ohx16tc:ohx17tc)))
+
+#Checking if this way results in same numbers
+View(NHANES_09_14 %>% select(c(ohx02tc:ohx31tc),-c(ohx16tc:ohx17tc),toothcount) %>% slice(1:10))
+     
 #Restricting to those >=30, had complete perio exam, and had at least
 #one permanent tooth
 NHANES_09_14 <- NHANES_09_14 %>% filter(toothcount>=1 & ohdpdsts==1 & ridageyr>=30)
@@ -185,6 +191,19 @@ NHANES_09_14 <- NHANES_09_14 %>% filter(toothcount>=1 & ohdpdsts==1 & ridageyr>=
 #Comparing toothcount here with SAS
 View(NHANES_09_14 %>% select(seqn ,toothcount) %>% arrange(seqn)) %>% slice(1:10)
 
+
+#Saving the dataset
+#Specifying location of saved dataset
+setwd("C:/Users/Tshih/OneDrive/Periodontal side differences in NHANES/Test/Output")
+
+write_csv(NHANES_09_14, 'perio.csv',na = "NA", append = FALSE, col_names = T)
+
+# CLear environment
+rm(list=ls())
+
+#Load the saved dataset
+NHANES_09_14 <- read_csv(file='perio.csv',col_names = T)
+NHANES_09_14 <- read_csv(file='C:/Users/Tshih/OneDrive/Periodontal side differences in NHANES/Test/Output/perio.csv', col_names = T)
 
 #Getting the maximum interproximal CAL
 NHANES_09_14[,c("ohx02lad","ohx02las","ohx02lap","ohx02laa")]
@@ -220,7 +239,7 @@ NHANES_09_14$max_cal_30 <- max_row(NHANES_09_14[,c("ohx30lad","ohx30las","ohx30l
 NHANES_09_14$max_cal_31 <- max_row(NHANES_09_14[,c("ohx31lad","ohx31las","ohx31lap","ohx31laa")])
 }
 
-NHANES_09_14 %>% select("ohx02lad","ohx02las","ohx02lap","ohx02laa","max_cal_2") %>% slice(1:10)
+NHANES_09_14 %>% select(ohx02lad,ohx02las,ohx02lap,ohx02laa,max_cal_2) %>% slice(1:10)
 
 #cal <- NHANES_09_14 %>% select(ends_with("lad"), ends_with("las"), ends_with("lap"),
 #ends_with("laa"))
@@ -259,7 +278,166 @@ NHANES_09_14[,c("ohx02pcd","ohx02pcs","ohx02pcp","ohx02pca")]
   NHANES_09_14$max_pd_31 <- max_row(NHANES_09_14[,c("ohx31pcd","ohx31pcs","ohx31pcp","ohx31pca")])
 }
 
-NHANES_09_14 %>% select("ohx02pcd","ohx02pcs","ohx02pcp","ohx02pca","max_pd_2") %>% slice(1:10)
+NHANES_09_14 %>% select(ohx02pcd,ohx02pcs,ohx02pcp,ohx02pca,max_pd_2) %>% slice(1:10)
+
+#Creating periodontitis variable
+#Number of teeth with CAL>=6 mm
+grep("max_cal_2",colnames(NHANES_09_14))
+grep("max_cal_31",colnames(NHANES_09_14))
+
+NHANES_09_14$tooth_cal_ge_6 <- count_row_if(ge(6), NHANES_09_14[,703:730])
+
+View(NHANES_09_14 %>% select(max_cal_2:max_cal_31, tooth_cal_ge_6) %>% slice(1:10))
+
+#This gives the sum (not what we want)
+NHANES_09_14$tooth_cal_ge_6 <- sum_row_if(ge(6), NHANES_09_14[,703:730])
+
+#Number of teeth with CAL>=4 mm
+NHANES_09_14$tooth_cal_ge_4 <- count_row_if(ge(4), NHANES_09_14[,703:730])
+
+View(NHANES_09_14 %>% select(max_cal_2:max_cal_31, tooth_cal_ge_4) %>% slice(1:10))
+
+#Number of teeth with PD>=5 mm
+grep("max_pd_2",colnames(NHANES_09_14))
+grep("max_pd_31",colnames(NHANES_09_14))
+
+NHANES_09_14$tooth_pd_ge_5 <- count_row_if(ge(5), NHANES_09_14[,731:758])
+
+View(NHANES_09_14 %>% select(max_pd_2:max_pd_31, tooth_pd_ge_5) %>% slice(1:10))
+
+#Number of teeth with PD>=4 mm
+NHANES_09_14$tooth_pd_ge_4 <- count_row_if(ge(4), NHANES_09_14[,731:758])
+
+View(NHANES_09_14 %>% select(max_pd_2:max_pd_31, tooth_pd_ge_4) %>% slice(1:10))
+
+#Number of sites with CAL>=3 mm
+site_NHANES <- NHANES_09_14 %>% select(-contains("lam"), -contains("lal"),
+  -contains("cjd"), -contains("cjs"), -contains("cjp"), -contains("cja"),
+  -contains("cjm"), -contains("cjl"), -contains("pcd"), -contains("pcs"),
+  -contains("pcp"), -contains("pca"), -contains("pcm"), -contains("pcl"))
+
+grep("ohx02lad",colnames(site_NHANES))
+grep("ohx31laa",colnames(site_NHANES))
+
+NHANES_09_14$site_cal_ge_3 <- count_row_if(ge(3), site_NHANES[,85:196])
+
+View(NHANES_09_14 %>% select(ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+                             ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+                             ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+                             ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+                             
+                             ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+                             ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+                             ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+                             ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+                             
+                             ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+                             ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+                             ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+                             ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+                             
+                             ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+                             ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+                             ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+                             ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa,
+                             site_cal_ge_3) %>% slice(1:10))
+
+#Creating periodontitis
+#COunting number of sites missing CAL and set periodontitis to missing if all
+#112 sites were missing CAL
+NHANES_09_14$miss_count <- count_row_if(NA, NHANES_09_14 %>% select(ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+  ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+  ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+  ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+                                                                    
+  ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+  ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+  ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+  ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+                                                                    
+  ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+  ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+  ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+  ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+                                                                    
+  ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+  ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+  ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+  ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa))
+
+#Checking distribution of missing cal sites
+table(NHANES_09_14$miss_count)
+
+#Coding periodontitis
+NHANES_09_14 <- NHANES_09_14 %>% mutate(periodontitis=case_when(
+  tooth_cal_ge_6>=2 & tooth_pd_ge_5>= 1 ~ 3,
+  tooth_cal_ge_4>=2 | tooth_pd_ge_5>= 2 ~ 2,
+  site_cal_ge_3>= 2 & (tooth_pd_ge_4>= 2 | tooth_pd_ge_5>= 1) ~ 1,
+  miss_count==112~NA_real_,
+  T ~ 0,))
+
+#Converting periodontitis to a factor
+class(NHANES_09_14$periodontitis)
+NHANES_09_14$periodontitis <- as.factor(NHANES_09_14$periodontitis)
+class(NHANES_09_14$periodontitis)
+levels(NHANES_09_14$periodontitis)
+
+#Checking coding of periodontitis
+View(NHANES_09_14 %>% select(tooth_cal_ge_6, tooth_pd_ge_5,
+  tooth_cal_ge_4, tooth_pd_ge_5,
+  site_cal_ge_3, tooth_pd_ge_4, tooth_pd_ge_5, periodontitis) %>% slice(1:10))
+
+#Checking frequency of periodontitis
+table(NHANES_09_14$periodontitis, useNA = "ifany")
+prop.table(table(NHANES_09_14$periodontitis, useNA = "ifany"))
+
+
+#Creating binary periodontitis varaibles with different cut-off points
+#Transform periodontitis to numeric back first
+NHANES_09_14$periodontitis <- as.numeric(NHANES_09_14$periodontitis)
+
+#Mild as the cut-off
+NHANES_09_14 <- NHANES_09_14 %>% mutate(perio_ge_mild=if_else(periodontitis>=1,"1","0"))
+
+#Moderate as the cut-off
+NHANES_09_14 <- NHANES_09_14 %>% mutate(perio_ge_mod=if_else(periodontitis>=2,"1","0"))
+
+#Severe as the cut-off
+NHANES_09_14 <- NHANES_09_14 %>% mutate(perio_ge_sev=if_else(periodontitis>=3,"1","0"))
+
+#Change periodontitis variables to factors
+NHANES_09_14[,c("periodontitis","perio_ge_mild","perio_ge_mod","perio_ge_sev")] <- apply(NHANES_09_14[,c("periodontitis","perio_ge_mild","perio_ge_mod","perio_ge_sev")],2,as.factor)
+
+class(NHANES_09_14$periodontitis)
+class(NHANES_09_14$perio_ge_mild)
+class(NHANES_09_14$perio_ge_mod)
+class(NHANES_09_14$perio_ge_sev)
+
+
+
+
+
+
+
+
+NHANES_09_14$toothcount <- apply(NHANES_09_14[,674:701],1,sum(case_when(NHANES_09_14[,674:701]>=6)), na.rm=T)
+
+NHANES_09_14 %>% NHANES_09_14[,674:701]case_when
+
+NHANES_09_14$toothcount <- apply(NHANES_09_14[,674:701],1,sum, na.rm=T)
+
+NHANES_09_14$tooth_cal_ge_6 <- apply(NHANES_09_14[,703:730],1,sum_if(6,~), data=NULL)
+NHANES_09_14$tooth_cal_ge_6 <- apply(NHANES_09_14[,703:730],1,sum, na.rm=T)
+
+NHANES_09_14$tooth_cal_ge_6 <- apply(NHANES_09_14[,c("max_cal_2":"max_cal_31")],1,sum_if(ge(6)), na.rm=T)
+
+
+
+sum_if(6, NHANES_09_14[,703:730])
+sum_col_if(6, NHANES_09_14[,703:730])
+
+View(NHANES_09_14[,703:730])
+
 
 
 View(NHANES_09_14 %>% select(ohx02lad:ohx31lad))
