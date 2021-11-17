@@ -408,12 +408,292 @@ NHANES_09_14 <- NHANES_09_14 %>% mutate(perio_ge_sev=if_else(periodontitis>=3,"1
 #Change periodontitis variables to factors
 NHANES_09_14[,c("periodontitis","perio_ge_mild","perio_ge_mod","perio_ge_sev")] <- apply(NHANES_09_14[,c("periodontitis","perio_ge_mild","perio_ge_mod","perio_ge_sev")],2,as.factor)
 
+#Checking class after conversion
 class(NHANES_09_14$periodontitis)
 class(NHANES_09_14$perio_ge_mild)
 class(NHANES_09_14$perio_ge_mod)
 class(NHANES_09_14$perio_ge_sev)
 
 
+#Getting the mean interproximal CAL per tooth
+NHANES_09_14[,c("ohx02lad","ohx02las","ohx02lap","ohx02laa")]
+
+{
+  NHANES_09_14$mean_cal_2 <- mean_row(NHANES_09_14[,c("ohx02lad","ohx02las","ohx02lap","ohx02laa")],na.rm = T)
+  NHANES_09_14$mean_cal_3 <- mean_row(NHANES_09_14[,c("ohx03lad","ohx03las","ohx03lap","ohx03laa")],na.rm = T)
+  NHANES_09_14$mean_cal_4 <- mean_row(NHANES_09_14[,c("ohx04lad","ohx04las","ohx04lap","ohx04laa")],na.rm = T)
+  NHANES_09_14$mean_cal_5 <- mean_row(NHANES_09_14[,c("ohx05lad","ohx05las","ohx05lap","ohx05laa")],na.rm = T)
+  NHANES_09_14$mean_cal_6 <- mean_row(NHANES_09_14[,c("ohx06lad","ohx06las","ohx06lap","ohx06laa")],na.rm = T)
+  NHANES_09_14$mean_cal_7 <- mean_row(NHANES_09_14[,c("ohx07lad","ohx07las","ohx07lap","ohx07laa")],na.rm = T)
+  NHANES_09_14$mean_cal_8 <- mean_row(NHANES_09_14[,c("ohx08lad","ohx08las","ohx08lap","ohx08laa")],na.rm = T)
+  NHANES_09_14$mean_cal_9 <- mean_row(NHANES_09_14[,c("ohx09lad","ohx09las","ohx09lap","ohx09laa")],na.rm = T)
+  NHANES_09_14$mean_cal_10 <- mean_row(NHANES_09_14[,c("ohx10lad","ohx10las","ohx10lap","ohx10laa")],na.rm = T)
+  NHANES_09_14$mean_cal_11 <- mean_row(NHANES_09_14[,c("ohx11lad","ohx11las","ohx11lap","ohx11laa")],na.rm = T)
+  NHANES_09_14$mean_cal_12 <- mean_row(NHANES_09_14[,c("ohx12lad","ohx12las","ohx12lap","ohx12laa")],na.rm = T)
+  NHANES_09_14$mean_cal_13 <- mean_row(NHANES_09_14[,c("ohx13lad","ohx13las","ohx13lap","ohx13laa")],na.rm = T)
+  NHANES_09_14$mean_cal_14 <- mean_row(NHANES_09_14[,c("ohx14lad","ohx14las","ohx14lap","ohx14laa")],na.rm = T)
+  NHANES_09_14$mean_cal_15 <- mean_row(NHANES_09_14[,c("ohx15lad","ohx15las","ohx15lap","ohx15laa")],na.rm = T)
+  NHANES_09_14$mean_cal_18 <- mean_row(NHANES_09_14[,c("ohx18lad","ohx18las","ohx18lap","ohx18laa")],na.rm = T)
+  NHANES_09_14$mean_cal_19 <- mean_row(NHANES_09_14[,c("ohx19lad","ohx19las","ohx19lap","ohx19laa")],na.rm = T)
+  NHANES_09_14$mean_cal_20 <- mean_row(NHANES_09_14[,c("ohx20lad","ohx20las","ohx20lap","ohx20laa")],na.rm = T)
+  NHANES_09_14$mean_cal_21 <- mean_row(NHANES_09_14[,c("ohx21lad","ohx21las","ohx21lap","ohx21laa")],na.rm = T)
+  NHANES_09_14$mean_cal_22 <- mean_row(NHANES_09_14[,c("ohx22lad","ohx22las","ohx22lap","ohx22laa")],na.rm = T)
+  NHANES_09_14$mean_cal_23 <- mean_row(NHANES_09_14[,c("ohx23lad","ohx23las","ohx23lap","ohx23laa")],na.rm = T)
+  NHANES_09_14$mean_cal_24 <- mean_row(NHANES_09_14[,c("ohx24lad","ohx24las","ohx24lap","ohx24laa")],na.rm = T)
+  NHANES_09_14$mean_cal_25 <- mean_row(NHANES_09_14[,c("ohx25lad","ohx25las","ohx25lap","ohx25laa")],na.rm = T)
+  NHANES_09_14$mean_cal_26 <- mean_row(NHANES_09_14[,c("ohx26lad","ohx26las","ohx26lap","ohx26laa")],na.rm = T)
+  NHANES_09_14$mean_cal_27 <- mean_row(NHANES_09_14[,c("ohx27lad","ohx27las","ohx27lap","ohx27laa")],na.rm = T)
+  NHANES_09_14$mean_cal_28 <- mean_row(NHANES_09_14[,c("ohx28lad","ohx28las","ohx28lap","ohx28laa")],na.rm = T)
+  NHANES_09_14$mean_cal_29 <- mean_row(NHANES_09_14[,c("ohx29lad","ohx29las","ohx29lap","ohx29laa")],na.rm = T)
+  NHANES_09_14$mean_cal_30 <- mean_row(NHANES_09_14[,c("ohx30lad","ohx30las","ohx30lap","ohx30laa")],na.rm = T)
+  NHANES_09_14$mean_cal_31 <- mean_row(NHANES_09_14[,c("ohx31lad","ohx31las","ohx31lap","ohx31laa")],na.rm = T)
+}
+
+NHANES_09_14 %>% select(ohx02lad,ohx02las,ohx02lap,ohx02laa,mean_cal_2) %>% slice(1:10)
+
+View(NHANES_09_14 %>%  select(ohx02lad,ohx02las,ohx02lap,ohx02laa,mean_cal_2) %>% slice(1:10))
+View(NHANES_09_14 %>%  select(ohx03lad,ohx03las,ohx03lap,ohx03laa,mean_cal_3) %>% slice(1:10))
+View(NHANES_09_14 %>%  select(ohx04lad,ohx04las,ohx04lap,ohx04laa,mean_cal_4) %>% slice(1:10))
+
+#Calculating mouth mean of mean interproximal CAL per tooth
+grep("mean_cal_2", colnames(NHANES_09_14))
+grep("mean_cal_31", colnames(NHANES_09_14))
+
+NHANES_09_14$mean_mean_cal <- mean_row(NHANES_09_14[,769:796],na.rm=T)
+
+#Checking if mean of mean cal was correctly coded
+NHANES_09_14 %>% select(seqn, mean_mean_cal) %>% slice(1:10)
+
+#Getting the mean of all interproximal sites in mouth
+NHANES_09_14$mean_cal_mouth <- rowMeans(NHANES_09_14 %>% select(
+      ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+      ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+      ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+      ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+                                                                    
+      ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+      ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+      ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+      ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+                                                                    
+      ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+      ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+      ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+      ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+                                                                    
+      ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+      ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+      ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+      ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa), 
+      na.rm = T)
+
+#Getting the sum of all interproximal sites in mouth
+NHANES_09_14$sum_cal_mouth <- rowSums(NHANES_09_14 %>% select(
+  ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+  ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+  ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+  ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+  
+  ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+  ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+  ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+  ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+  
+  ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+  ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+  ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+  ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+  
+  ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+  ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+  ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+  ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa), 
+  na.rm = T)
+
+#Getting the count of all interproximal sites in mouth
+NHANES_09_14$count_cal_mouth <- count_row_if(not_na, NHANES_09_14 %>% select(
+  ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+  ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+  ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+  ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+  
+  ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+  ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+  ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+  ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+  
+  ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+  ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+  ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+  ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+  
+  ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+  ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+  ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+  ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa))
+
+#Comparing mean of mean cal and mean of all interproximal sites
+NHANES_09_14 %>% select(seqn, mean_mean_cal,mean_cal_mouth) %>% slice(1:10)
+
+View(NHANES_09_14 %>% select(seqn, toothcount,
+                                                ohx02lad, ohx03lad, ohx04lad, ohx05lad, ohx06lad, ohx07lad, ohx08lad,
+                                                ohx09lad, ohx10lad, ohx11lad, ohx12lad, ohx13lad, ohx14lad, ohx15lad,
+                                                ohx18lad, ohx19lad, ohx20lad, ohx21lad, ohx22lad, ohx23lad, ohx24lad, 
+                                                ohx25lad, ohx26lad, ohx27lad, ohx28lad, ohx29lad, ohx30lad, ohx31lad,
+                                                
+                                                ohx02las, ohx03las, ohx04las, ohx05las, ohx06las, ohx07las, ohx08las, 
+                                                ohx09las, ohx10las, ohx11las, ohx12las, ohx13las, ohx14las, ohx15las, 
+                                                ohx18las, ohx19las, ohx20las, ohx21las, ohx22las, ohx23las, ohx24las, 
+                                                ohx25las, ohx26las, ohx27las, ohx28las, ohx29las, ohx30las, ohx31las,
+                                                
+                                                ohx02lap, ohx03lap, ohx04lap, ohx05lap, ohx06lap, ohx07lap, ohx08lap, 
+                                                ohx09lap, ohx10lap, ohx11lap, ohx12lap, ohx13lap, ohx14lap, ohx15lap, 
+                                                ohx18lap, ohx19lap, ohx20lap, ohx21lap, ohx22lap, ohx23lap, ohx24lap, 
+                                                ohx25lap, ohx26lap, ohx27lap, ohx28lap, ohx29lap, ohx30lap, ohx31lap,
+                                                
+                                                ohx02laa, ohx03laa, ohx04laa, ohx05laa, ohx06laa, ohx07laa, ohx08laa, 
+                                                ohx09laa, ohx10laa, ohx11laa, ohx12laa, ohx13laa, ohx14laa, ohx15laa, 
+                                                ohx18laa, ohx19laa, ohx20laa, ohx21laa, ohx22laa, ohx23laa, ohx24laa, 
+                                                ohx25laa, ohx26laa, ohx27laa, ohx28laa, ohx29laa, ohx30laa, ohx31laa,
+                                                mean_mean_cal,mean_cal_mouth,sum_cal_mouth, count_cal_mouth) %>% slice(1:10))
+
+#Getting the mean interproximal PD per tooth
+NHANES_09_14[,c("ohx02pcd","ohx02pcs","ohx02pcp","ohx02pca")]
+
+{
+  NHANES_09_14$mean_pd_2 <- mean_row(NHANES_09_14[,c("ohx02pcd","ohx02pcs","ohx02pcp","ohx02pca")],na.rm = T)
+  NHANES_09_14$mean_pd_3 <- mean_row(NHANES_09_14[,c("ohx03pcd","ohx03pcs","ohx03pcp","ohx03pca")],na.rm = T)
+  NHANES_09_14$mean_pd_4 <- mean_row(NHANES_09_14[,c("ohx04pcd","ohx04pcs","ohx04pcp","ohx04pca")],na.rm = T)
+  NHANES_09_14$mean_pd_5 <- mean_row(NHANES_09_14[,c("ohx05pcd","ohx05pcs","ohx05pcp","ohx05pca")],na.rm = T)
+  NHANES_09_14$mean_pd_6 <- mean_row(NHANES_09_14[,c("ohx06pcd","ohx06pcs","ohx06pcp","ohx06pca")],na.rm = T)
+  NHANES_09_14$mean_pd_7 <- mean_row(NHANES_09_14[,c("ohx07pcd","ohx07pcs","ohx07pcp","ohx07pca")],na.rm = T)
+  NHANES_09_14$mean_pd_8 <- mean_row(NHANES_09_14[,c("ohx08pcd","ohx08pcs","ohx08pcp","ohx08pca")],na.rm = T)
+  NHANES_09_14$mean_pd_9 <- mean_row(NHANES_09_14[,c("ohx09pcd","ohx09pcs","ohx09pcp","ohx09pca")],na.rm = T)
+  NHANES_09_14$mean_pd_10 <- mean_row(NHANES_09_14[,c("ohx10pcd","ohx10pcs","ohx10pcp","ohx10pca")],na.rm = T)
+  NHANES_09_14$mean_pd_11 <- mean_row(NHANES_09_14[,c("ohx11pcd","ohx11pcs","ohx11pcp","ohx11pca")],na.rm = T)
+  NHANES_09_14$mean_pd_12 <- mean_row(NHANES_09_14[,c("ohx12pcd","ohx12pcs","ohx12pcp","ohx12pca")],na.rm = T)
+  NHANES_09_14$mean_pd_13 <- mean_row(NHANES_09_14[,c("ohx13pcd","ohx13pcs","ohx13pcp","ohx13pca")],na.rm = T)
+  NHANES_09_14$mean_pd_14 <- mean_row(NHANES_09_14[,c("ohx14pcd","ohx14pcs","ohx14pcp","ohx14pca")],na.rm = T)
+  NHANES_09_14$mean_pd_15 <- mean_row(NHANES_09_14[,c("ohx15pcd","ohx15pcs","ohx15pcp","ohx15pca")],na.rm = T)
+  NHANES_09_14$mean_pd_18 <- mean_row(NHANES_09_14[,c("ohx18pcd","ohx18pcs","ohx18pcp","ohx18pca")],na.rm = T)
+  NHANES_09_14$mean_pd_19 <- mean_row(NHANES_09_14[,c("ohx19pcd","ohx19pcs","ohx19pcp","ohx19pca")],na.rm = T)
+  NHANES_09_14$mean_pd_20 <- mean_row(NHANES_09_14[,c("ohx20pcd","ohx20pcs","ohx20pcp","ohx20pca")],na.rm = T)
+  NHANES_09_14$mean_pd_21 <- mean_row(NHANES_09_14[,c("ohx21pcd","ohx21pcs","ohx21pcp","ohx21pca")],na.rm = T)
+  NHANES_09_14$mean_pd_22 <- mean_row(NHANES_09_14[,c("ohx22pcd","ohx22pcs","ohx22pcp","ohx22pca")],na.rm = T)
+  NHANES_09_14$mean_pd_23 <- mean_row(NHANES_09_14[,c("ohx23pcd","ohx23pcs","ohx23pcp","ohx23pca")],na.rm = T)
+  NHANES_09_14$mean_pd_24 <- mean_row(NHANES_09_14[,c("ohx24pcd","ohx24pcs","ohx24pcp","ohx24pca")],na.rm = T)
+  NHANES_09_14$mean_pd_25 <- mean_row(NHANES_09_14[,c("ohx25pcd","ohx25pcs","ohx25pcp","ohx25pca")],na.rm = T)
+  NHANES_09_14$mean_pd_26 <- mean_row(NHANES_09_14[,c("ohx26pcd","ohx26pcs","ohx26pcp","ohx26pca")],na.rm = T)
+  NHANES_09_14$mean_pd_27 <- mean_row(NHANES_09_14[,c("ohx27pcd","ohx27pcs","ohx27pcp","ohx27pca")],na.rm = T)
+  NHANES_09_14$mean_pd_28 <- mean_row(NHANES_09_14[,c("ohx28pcd","ohx28pcs","ohx28pcp","ohx28pca")],na.rm = T)
+  NHANES_09_14$mean_pd_29 <- mean_row(NHANES_09_14[,c("ohx29pcd","ohx29pcs","ohx29pcp","ohx29pca")],na.rm = T)
+  NHANES_09_14$mean_pd_30 <- mean_row(NHANES_09_14[,c("ohx30pcd","ohx30pcs","ohx30pcp","ohx30pca")],na.rm = T)
+  NHANES_09_14$mean_pd_31 <- mean_row(NHANES_09_14[,c("ohx31pcd","ohx31pcs","ohx31pcp","ohx31pca")],na.rm = T)
+}
+
+NHANES_09_14 %>% select(ohx02pcd,ohx02pcs,ohx02pcp,ohx02pca,mean_pd_2) %>% slice(1:10)
+
+#pdculating mouth mean of mean interproximal PD per tooth
+grep("mean_pd_2", colnames(NHANES_09_14))
+grep("mean_pd_31", colnames(NHANES_09_14))
+
+NHANES_09_14$mean_mean_pd <- mean_row(NHANES_09_14[,797:824],na.rm=T)
+
+#Checking if mean of mean pd was correctly coded
+NHANES_09_14 %>% select(seqn, mean_mean_pd) %>% slice(1:10)
+
+#Getting the mean of all interproximal sites in mouth
+NHANES_09_14$mean_pd_mouth <- rowMeans(NHANES_09_14 %>% select(
+  ohx02pcd, ohx03pcd, ohx04pcd, ohx05pcd, ohx06pcd, ohx07pcd, ohx08pcd,
+  ohx09pcd, ohx10pcd, ohx11pcd, ohx12pcd, ohx13pcd, ohx14pcd, ohx15pcd,
+  ohx18pcd, ohx19pcd, ohx20pcd, ohx21pcd, ohx22pcd, ohx23pcd, ohx24pcd, 
+  ohx25pcd, ohx26pcd, ohx27pcd, ohx28pcd, ohx29pcd, ohx30pcd, ohx31pcd,
+  
+  ohx02pcs, ohx03pcs, ohx04pcs, ohx05pcs, ohx06pcs, ohx07pcs, ohx08pcs, 
+  ohx09pcs, ohx10pcs, ohx11pcs, ohx12pcs, ohx13pcs, ohx14pcs, ohx15pcs, 
+  ohx18pcs, ohx19pcs, ohx20pcs, ohx21pcs, ohx22pcs, ohx23pcs, ohx24pcs, 
+  ohx25pcs, ohx26pcs, ohx27pcs, ohx28pcs, ohx29pcs, ohx30pcs, ohx31pcs,
+  
+  ohx02pcp, ohx03pcp, ohx04pcp, ohx05pcp, ohx06pcp, ohx07pcp, ohx08pcp, 
+  ohx09pcp, ohx10pcp, ohx11pcp, ohx12pcp, ohx13pcp, ohx14pcp, ohx15pcp, 
+  ohx18pcp, ohx19pcp, ohx20pcp, ohx21pcp, ohx22pcp, ohx23pcp, ohx24pcp, 
+  ohx25pcp, ohx26pcp, ohx27pcp, ohx28pcp, ohx29pcp, ohx30pcp, ohx31pcp,
+  
+  ohx02pca, ohx03pca, ohx04pca, ohx05pca, ohx06pca, ohx07pca, ohx08pca, 
+  ohx09pca, ohx10pca, ohx11pca, ohx12pca, ohx13pca, ohx14pca, ohx15pca, 
+  ohx18pca, ohx19pca, ohx20pca, ohx21pca, ohx22pca, ohx23pca, ohx24pca, 
+  ohx25pca, ohx26pca, ohx27pca, ohx28pca, ohx29pca, ohx30pca, ohx31pca), 
+  na.rm = T)
+
+#Getting the sum of all interproximal sites in mouth
+NHANES_09_14$sum_pd_mouth <- rowSums(NHANES_09_14 %>% select(
+  ohx02pcd, ohx03pcd, ohx04pcd, ohx05pcd, ohx06pcd, ohx07pcd, ohx08pcd,
+  ohx09pcd, ohx10pcd, ohx11pcd, ohx12pcd, ohx13pcd, ohx14pcd, ohx15pcd,
+  ohx18pcd, ohx19pcd, ohx20pcd, ohx21pcd, ohx22pcd, ohx23pcd, ohx24pcd, 
+  ohx25pcd, ohx26pcd, ohx27pcd, ohx28pcd, ohx29pcd, ohx30pcd, ohx31pcd,
+  
+  ohx02pcs, ohx03pcs, ohx04pcs, ohx05pcs, ohx06pcs, ohx07pcs, ohx08pcs, 
+  ohx09pcs, ohx10pcs, ohx11pcs, ohx12pcs, ohx13pcs, ohx14pcs, ohx15pcs, 
+  ohx18pcs, ohx19pcs, ohx20pcs, ohx21pcs, ohx22pcs, ohx23pcs, ohx24pcs, 
+  ohx25pcs, ohx26pcs, ohx27pcs, ohx28pcs, ohx29pcs, ohx30pcs, ohx31pcs,
+  
+  ohx02pcp, ohx03pcp, ohx04pcp, ohx05pcp, ohx06pcp, ohx07pcp, ohx08pcp, 
+  ohx09pcp, ohx10pcp, ohx11pcp, ohx12pcp, ohx13pcp, ohx14pcp, ohx15pcp, 
+  ohx18pcp, ohx19pcp, ohx20pcp, ohx21pcp, ohx22pcp, ohx23pcp, ohx24pcp, 
+  ohx25pcp, ohx26pcp, ohx27pcp, ohx28pcp, ohx29pcp, ohx30pcp, ohx31pcp,
+  
+  ohx02pca, ohx03pca, ohx04pca, ohx05pca, ohx06pca, ohx07pca, ohx08pca, 
+  ohx09pca, ohx10pca, ohx11pca, ohx12pca, ohx13pca, ohx14pca, ohx15pca, 
+  ohx18pca, ohx19pca, ohx20pca, ohx21pca, ohx22pca, ohx23pca, ohx24pca, 
+  ohx25pca, ohx26pca, ohx27pca, ohx28pca, ohx29pca, ohx30pca, ohx31pca), 
+  na.rm = T)
+
+#Getting the count of all interproximal sites in mouth
+NHANES_09_14$count_pd_mouth <- count_row_if(not_na, NHANES_09_14 %>% select(
+  ohx02pcd, ohx03pcd, ohx04pcd, ohx05pcd, ohx06pcd, ohx07pcd, ohx08pcd,
+  ohx09pcd, ohx10pcd, ohx11pcd, ohx12pcd, ohx13pcd, ohx14pcd, ohx15pcd,
+  ohx18pcd, ohx19pcd, ohx20pcd, ohx21pcd, ohx22pcd, ohx23pcd, ohx24pcd, 
+  ohx25pcd, ohx26pcd, ohx27pcd, ohx28pcd, ohx29pcd, ohx30pcd, ohx31pcd,
+  
+  ohx02pcs, ohx03pcs, ohx04pcs, ohx05pcs, ohx06pcs, ohx07pcs, ohx08pcs, 
+  ohx09pcs, ohx10pcs, ohx11pcs, ohx12pcs, ohx13pcs, ohx14pcs, ohx15pcs, 
+  ohx18pcs, ohx19pcs, ohx20pcs, ohx21pcs, ohx22pcs, ohx23pcs, ohx24pcs, 
+  ohx25pcs, ohx26pcs, ohx27pcs, ohx28pcs, ohx29pcs, ohx30pcs, ohx31pcs,
+  
+  ohx02pcp, ohx03pcp, ohx04pcp, ohx05pcp, ohx06pcp, ohx07pcp, ohx08pcp, 
+  ohx09pcp, ohx10pcp, ohx11pcp, ohx12pcp, ohx13pcp, ohx14pcp, ohx15pcp, 
+  ohx18pcp, ohx19pcp, ohx20pcp, ohx21pcp, ohx22pcp, ohx23pcp, ohx24pcp, 
+  ohx25pcp, ohx26pcp, ohx27pcp, ohx28pcp, ohx29pcp, ohx30pcp, ohx31pcp,
+  
+  ohx02pca, ohx03pca, ohx04pca, ohx05pca, ohx06pca, ohx07pca, ohx08pca, 
+  ohx09pca, ohx10pca, ohx11pca, ohx12pca, ohx13pca, ohx14pca, ohx15pca, 
+  ohx18pca, ohx19pca, ohx20pca, ohx21pca, ohx22pca, ohx23pca, ohx24pca, 
+  ohx25pca, ohx26pca, ohx27pca, ohx28pca, ohx29pca, ohx30pca, ohx31pca))
+
+#Comparing mean of mean pd and mean of all interproximal sites
+NHANES_09_14 %>% select(seqn, mean_mean_pd,mean_pd_mouth) %>% slice(1:10)
+
+View(NHANES_09_14 %>% select(seqn, toothcount,
+                             ohx02pcd, ohx03pcd, ohx04pcd, ohx05pcd, ohx06pcd, ohx07pcd, ohx08pcd,
+                             ohx09pcd, ohx10pcd, ohx11pcd, ohx12pcd, ohx13pcd, ohx14pcd, ohx15pcd,
+                             ohx18pcd, ohx19pcd, ohx20pcd, ohx21pcd, ohx22pcd, ohx23pcd, ohx24pcd, 
+                             ohx25pcd, ohx26pcd, ohx27pcd, ohx28pcd, ohx29pcd, ohx30pcd, ohx31pcd,
+                             
+                             ohx02pcs, ohx03pcs, ohx04pcs, ohx05pcs, ohx06pcs, ohx07pcs, ohx08pcs, 
+                             ohx09pcs, ohx10pcs, ohx11pcs, ohx12pcs, ohx13pcs, ohx14pcs, ohx15pcs, 
+                             ohx18pcs, ohx19pcs, ohx20pcs, ohx21pcs, ohx22pcs, ohx23pcs, ohx24pcs, 
+                             ohx25pcs, ohx26pcs, ohx27pcs, ohx28pcs, ohx29pcs, ohx30pcs, ohx31pcs,
+                             
+                             ohx02pcp, ohx03pcp, ohx04pcp, ohx05pcp, ohx06pcp, ohx07pcp, ohx08pcp, 
+                             ohx09pcp, ohx10pcp, ohx11pcp, ohx12pcp, ohx13pcp, ohx14pcp, ohx15pcp, 
+                             ohx18pcp, ohx19pcp, ohx20pcp, ohx21pcp, ohx22pcp, ohx23pcp, ohx24pcp, 
+                             ohx25pcp, ohx26pcp, ohx27pcp, ohx28pcp, ohx29pcp, ohx30pcp, ohx31pcp,
+                             
+                             ohx02pca, ohx03pca, ohx04pca, ohx05pca, ohx06pca, ohx07pca, ohx08pca, 
+                             ohx09pca, ohx10pca, ohx11pca, ohx12pca, ohx13pca, ohx14pca, ohx15pca, 
+                             ohx18pca, ohx19pca, ohx20pca, ohx21pca, ohx22pca, ohx23pca, ohx24pca, 
+                             ohx25pca, ohx26pca, ohx27pca, ohx28pca, ohx29pca, ohx30pca, ohx31pca,
+                             mean_mean_pd,mean_pd_mouth,sum_pd_mouth, count_pd_mouth) %>% slice(1:10))
 
 
 
