@@ -23,6 +23,7 @@ library(rstatix)
 library(gtsummary)
 library(vtable)
 library(naniar)
+library(summarytools)
 }
 
 {
@@ -695,6 +696,52 @@ View(NHANES_09_14 %>% select(seqn, toothcount,
                              ohx25pca, ohx26pca, ohx27pca, ohx28pca, ohx29pca, ohx30pca, ohx31pca,
                              mean_mean_pd,mean_pd_mouth,sum_pd_mouth, count_pd_mouth) %>% slice(1:10))
 
+#Rename age
+NHANES_09_14 <- NHANES_09_14 %>% rename(age=ridageyr)
+NHANES_09_14 <- NHANES_09_14 %>% rename(gender=riagendr)
+
+#Descriptive statistics
+#Defining a function for calculating standard error
+se <- function(x, na.rm=FALSE) {
+  if (na.rm) x <- na.omit(x)
+  sqrt(var(x)/length(x))
+}
+
+#Defining a function for calculating mean while ignoring missing values
+mean.ignoreNA <- function(vec) {
+  return(mean(vec, na.rm=TRUE))
+}
+mean.ignoreNA(data1$AGE)
+
+#Getting means of age and toothcount
+View(NHANES_09_14 %>% summarise(across(.col=c(age, toothcount), .fns=list("mean"=mean,"sd"=sd,"SEM"=se,"median"=median,"IQR"=IQR), na.rm=T)))
+
+#Summary using rstatix package
+NHANES_09_14 %>% 
+  get_summary_stats(
+    age, toothcount,  # columns to calculate for
+    type = "common")                    # summary stats to return
+
+#Summary using summarytools package
+summarytools::view(dfSummary(NHANES_09_14))
+
+#Summary using gtsummary package
+vtable(NHANES_09_14)
+NHANES_09_14 %>% select(gender,periodontitis) %>% tbl_summary()
+
+#Using skimr package
+skim(NHANES_09_14)
+
+#Getting frequencies of specific variables
+NHANES_09_14 %>% tabyl(c(NHANES_09_14[,c("gender","age")]))
+
+#Reprodcuing Table 1. Tooth level absolute comparisons of clinical measurement sites (mm) by
+#tooth type and disease status*/ 
+
+
+
+
+
 
 
 
@@ -874,11 +921,12 @@ dim(NHANES_09_14_2)
 colnames(NHANES_09_14_2)
 
 
+teeth$sci <- ifelsejdgmh
 
 
 
+difft <- ((NHANES_09_14$ohx02lap)-(NHANES_09_14$ohx02las))+()/
 
-
-
-
+  NHANES_09_14 %>%
+  gather(key = tooth, value = ntooth, starts_with("dvar"))
 
